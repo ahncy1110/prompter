@@ -53,12 +53,12 @@ def document_to_db(uploaded_file, size):    # 문서 크기에 맞게 사이즈 
 
 # 초기 세션 상태 설정
 if 'chat_history' not in st.session_state:
-    st.session_state.chat_history = {'TV': [], 'AC': [], 'HM': []}
+    st.session_state.chat_history = {'AC': [], 'TV': [], 'HM': []}
 
 # 업로드 되면 동작하는 코드
 if tv_file is not None:
-    db_tv = document_to_db(tv_file, 500)
     db_ac = document_to_db(ac_file, 500)
+    db_tv = document_to_db(tv_file, 500)
     db_hm = document_to_db(hm_file, 300)
 
     # Choice
