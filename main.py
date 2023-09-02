@@ -107,8 +107,12 @@ if tv_file is not None:
             if st.button('에어컨에게 질문하기'):
                 with st.spinner('Wait for it...'):
                     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+
+                    # 질문에 특정 패턴을 추가
+                    custom_query = f"{ac_question}. 너는 에어컨 메뉴얼을 알고 있는 상태야. 사용자가 어떤 질문을 하면 메뉴얼 기반으로 답변을 할거야. 그런데 이때 말끝마다 '슝'을 붙여줘. 예를 들어, '에어컨 온도는 온도 높임 버튼을 누르면됩니다'라고 답하고싶으면 '에어컨 온도는 온도 높임 버튼을 누르면됩니다슝'이라고 대답해주고, '에어컨 전원은 전원버튼을 누르세요'라고 답하고싶으면 '에어컨 전원은 전원버튼을 누르세요슝'으로 답해줘."
+
                     qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_ac.as_retriever())
-                    result = qa_chain({"query": ac_question})
+                    result = qa_chain({"query": custom_query})
                     st.session_state.chat_history['AC'].append({"question": ac_question, "answer": result["result"]})
 
             # 챗 기록 출력
@@ -128,9 +132,13 @@ if tv_file is not None:
             if st.button('TV에게 질문하기', key='tv_button'):
                 with st.spinner('Wait for it...'):
                     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
-                    qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_tv.as_retriever())
-                    result = qa_chain({"query": tv_question})
-                    st.session_state.chat_history['TV'].append({"question": tv_question, "answer": result["result"]})
+
+                    # 질문에 특정 패턴을 추가
+                    custom_query = f"{tv_question}. 너는 TV 메뉴얼을 알고 있는 상태야. 사용자가 어떤 질문을 하면 메뉴얼 기반으로 답변을 할거야. 그런데 이때 말끝마다 '티비'를 붙여줘. 예를 들어, 'tv 볼륨은 볼륨 업 버튼을 누르면됩니다'라고 답하고싶으면 'tv 볼륨은 볼륨 업 버튼을 누르면됩니다티비'이라고 대답해주고, 'tv 전원은 전원버튼을 누르세요'라고 답하고싶으면 'tv 전원은 전원버튼을 누르세요티비'로 답해줘."
+
+                    qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_ac.as_retriever())
+                    result = qa_chain({"query": custom_query})
+                    st.session_state.chat_history['AC'].append({"question": tv_question, "answer": result["result"]})
 
             # 챗 기록 출력
             for chat in st.session_state.chat_history['TV']:
