@@ -29,9 +29,6 @@ cyworld_img = Image.open('cyworld-room.jpg')
 st.image(cyworld_img)
 st.write("---")
 
-# 챗 기록을 저장할 딕셔너리
-chat_history = {'TV': [], '에어컨': [], '가습기': []}
-
 def document_to_db(uploaded_file, size):    # 문서 크기에 맞게 사이즈 지정하면 좋을 것 같아서 para 넣었어용
     pages = uploaded_file.load_and_split()
     #Split
@@ -50,6 +47,11 @@ def document_to_db(uploaded_file, size):    # 문서 크기에 맞게 사이즈 
     # load it into Chroma
     db = Chroma.from_documents(texts, embeddings_model)
     return db
+
+
+# 초기 세션 상태 설정
+if 'chat_history' not in st.session_state:
+    st.session_state.chat_history = {'TV': [], 'AC': [], 'HM': []}
 
 # 업로드 되면 동작하는 코드
 if tv_file is not None:
@@ -73,10 +75,10 @@ if tv_file is not None:
                 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
                 qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_tv.as_retriever())
                 result = qa_chain({"query": tv_question})
-                chat_history['TV'].append({"question": tv_question, "answer": result["result"]})
+                st.session_state.chat_history['TV'].append({"question": tv_question, "answer": result["result"]})
 
         # 챗 기록 출력
-        for chat in chat_history['TV']:
+        for chat in st.session_state.chat_history['TV']:
             st.text(f"Q: {chat['question']}")
             st.text(f"A: {chat['answer']}")
             st.write("---")
@@ -93,10 +95,10 @@ if tv_file is not None:
                 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
                 qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_ac.as_retriever())
                 result = qa_chain({"query": ac_question})
-                chat_history['에어컨'].append({"question": ac_question, "answer": result["result"]})
+                st.session_state.chat_history['AC'].append({"question": ac_question, "answer": result["result"]})
 
         # 챗 기록 출력
-        for chat in chat_history['에어컨']:
+        for chat in st.session_state.chat_history['AC']:
             st.text(f"Q: {chat['question']}")
             st.text(f"A: {chat['answer']}")
             st.write("---")
@@ -113,10 +115,10 @@ if tv_file is not None:
                 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
                 qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_hm.as_retriever())
                 result = qa_chain({"query": hm_question})
-                chat_history['가습기'].append({"question": hm_question, "answer": result["result"]})
+                st.session_state.chat_history['HM'].append({"question": hm_question, "answer": result["result"]})
 
         # 챗 기록 출력
-        for chat in chat_history['가습기']:
+        for chat in st.session_state.chat_history['HM']:
             st.text(f"Q: {chat['question']}")
             st.text(f"A: {chat['answer']}")
             st.write("---")
