@@ -29,6 +29,9 @@ cyworld_img = Image.open('cyworld-room.jpg')
 st.image(cyworld_img)
 st.write("---")
 
+# 챗 기록을 저장할 딕셔너리
+chat_history = {'TV': [], '에어컨': [], '가습기': []}
+
 def document_to_db(uploaded_file, size):    # 문서 크기에 맞게 사이즈 지정하면 좋을 것 같아서 para 넣었어용
     pages = uploaded_file.load_and_split()
     #Split
@@ -70,7 +73,13 @@ if tv_file is not None:
                 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
                 qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_tv.as_retriever())
                 result = qa_chain({"query": tv_question})
-                st.write(result["result"])
+                chat_history['TV'].append({"question": tv_question, "answer": result["result"]})
+
+        # 챗 기록 출력
+        for chat in chat_history['TV']:
+            st.text(f"Q: {chat['question']}")
+            st.text(f"A: {chat['answer']}")
+            st.write("---")
 
     # Air Conditioner
     with col_ac:
@@ -78,13 +87,19 @@ if tv_file is not None:
         ac_img = Image.open('air-conditioner.png')
         ac_img = ac_img.resize((100, 100))
         st.image(ac_img)
-        ac_question = st.text_input('에어컨에게 질문을 입력하세요')
-        if st.button('에어컨에게 질문하기', key='ac_button'):
+        ac_question = st.text_input('에어컨에게 질문을 입력하세요', key='ac')
+        if st.button('에어컨에게 질문하기'):
             with st.spinner('Wait for it...'):
                 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
                 qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_ac.as_retriever())
                 result = qa_chain({"query": ac_question})
-                st.write(result["result"])
+                chat_history['에어컨'].append({"question": ac_question, "answer": result["result"]})
+
+        # 챗 기록 출력
+        for chat in chat_history['에어컨']:
+            st.text(f"Q: {chat['question']}")
+            st.text(f"A: {chat['answer']}")
+            st.write("---")
 
     # Humidifier
     with col_hm:
@@ -92,10 +107,16 @@ if tv_file is not None:
         hm_img = Image.open('humidifier.png')
         hm_img = hm_img.resize((100, 100))
         st.image(hm_img)
-        hm_question = st.text_input('가습기에게 질문을 입력하세요')
-        if st.button('가습기에게 질문하기', key='hm_button'):
+        hm_question = st.text_input('가습기에게 질문을 입력하세요', key='hm')
+        if st.button('가습기에게 질문하기'):
             with st.spinner('Wait for it...'):
                 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
                 qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_hm.as_retriever())
                 result = qa_chain({"query": hm_question})
-                st.write(result["result"])
+                chat_history['가습기'].append({"question": hm_question, "answer": result["result"]})
+
+        # 챗 기록 출력
+        for chat in chat_history['가습기']:
+            st.text(f"Q: {chat['question']}")
+            st.text(f"A: {chat['answer']}")
+            st.write("---")
