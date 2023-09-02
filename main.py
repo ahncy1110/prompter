@@ -62,8 +62,8 @@ if tv_file is not None:
     db_hm = document_to_db(hm_file, 300)
 
     # Choice
-    col1, col2, col3 = st.columns(3)
     st.subheader("기기를 바라보고 선택하세요!")
+    col1, col2, col3 = st.columns(3)
     with col1:
         st.image("person_TV.jpg", width=100)
         st.markdown("티비를 <br/> 바라본다", unsafe_allow_html=True)
