@@ -25,7 +25,7 @@ st.title("ChatPDF")
 st.write("---")
 
 # 방 이미지
-cyworld_img = Image.open('livingroom.jpeg')
+cyworld_img = Image.open('livingroom.jpg')
 # 이미지 크기 조정
 cyworld_img = cyworld_img.resize((650, int(650 * (cyworld_img.height / cyworld_img.width))))
 st.image(cyworld_img, width=650)
