@@ -48,51 +48,54 @@ def document_to_db(uploaded_file, size):    # 문서 크기에 맞게 사이즈 
     db = Chroma.from_documents(texts, embeddings_model)
     return db
 
-#업로드 되면 동작하는 코드
+# 업로드 되면 동작하는 코드
 if tv_file is not None:
     db_tv = document_to_db(tv_file, 500)
     db_ac = document_to_db(ac_file, 500)
     db_hm = document_to_db(hm_file, 300)
 
-    #Choice
+    # Choice
     st.header("기기를 선택하고 PDF에게 질문해보세요!!")
-    menu = ['TV', '에어컨', '가습기']    #options
-    # choice_box = st.radio('기기를 선택하세요', menu)
-    # st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)    
-    choice_box = st.selectbox('기기를 선택하세요', menu)
-    
-    if choice_box == menu[0]:
+    empty1, col_tv, empty2, col_ac, empty3, col_hm, empty4 = st.columns([1, 1, 1, 1, 1, 1, 1])
+
+    # TV
+    with col_tv:
+        st.subheader("TV")
         tv_img = Image.open('television.png')
         tv_img = tv_img.resize((100, 100))
         st.image(tv_img)
-        question = st.text_input('질문을 입력하세요')
+        tv_question = st.text_input('TV에게 질문을 입력하세요')
         if st.button('TV에게 질문하기'):
             with st.spinner('Wait for it...'):
                 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
-                qa_chain = RetrievalQA.from_chain_type(llm,retriever=db_tv.as_retriever())
-                result = qa_chain({"query": question})
+                qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_tv.as_retriever())
+                result = qa_chain({"query": tv_question})
                 st.write(result["result"])
-                
-    elif choice_box == menu[1]:
+
+    # Air Conditioner
+    with col_ac:
+        st.subheader("에어컨")
         ac_img = Image.open('air-conditioner.png')
         ac_img = ac_img.resize((100, 100))
         st.image(ac_img)
-        question = st.text_input('질문을 입력하세요')
+        ac_question = st.text_input('에어컨에게 질문을 입력하세요')
         if st.button('에어컨에게 질문하기'):
             with st.spinner('Wait for it...'):
                 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
-                qa_chain = RetrievalQA.from_chain_type(llm,retriever=db_ac.as_retriever())
-                result = qa_chain({"query": question})
+                qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_ac.as_retriever())
+                result = qa_chain({"query": ac_question})
                 st.write(result["result"])
 
-    elif choice_box == menu[2]:
+    # Humidifier
+    with col_hm:
+        st.subheader("가습기")
         hm_img = Image.open('humidifier.png')
         hm_img = hm_img.resize((100, 100))
         st.image(hm_img)
-        question = st.text_input('질문을 입력하세요')
+        hm_question = st.text_input('가습기에게 질문을 입력하세요')
         if st.button('가습기에게 질문하기'):
             with st.spinner('Wait for it...'):
                 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
-                qa_chain = RetrievalQA.from_chain_type(llm,retriever=db_hm.as_retriever())
-                result = qa_chain({"query": question})
+                qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_hm.as_retriever())
+                result = qa_chain({"query": hm_question})
                 st.write(result["result"])
