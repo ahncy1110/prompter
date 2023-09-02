@@ -26,7 +26,7 @@ st.write("---")
 
 # 방 이미지
 cyworld_img = Image.open('cyworld-room.jpg')
-st.image(cyworld_img, use_column_width=True) # 사진 작은거같아서
+st.image(cyworld_img)
 st.write("---")
 
 def document_to_db(uploaded_file, size):    # 문서 크기에 맞게 사이즈 지정하면 좋을 것 같아서 para 넣었어용
