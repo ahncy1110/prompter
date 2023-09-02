@@ -25,7 +25,7 @@ st.title("ChatPDF")
 st.write("---")
 
 # 방 이미지
-cyworld_img = Image.open('cyworld-room.jpg')
+cyworld_img = Image.open('cyworld-room.jpg', width=500)
 st.image(cyworld_img)
 st.write("---")
 
@@ -62,20 +62,23 @@ if tv_file is not None:
     # Choice
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.image("TVperson.jpg", caption="티비를 바라본다", width=100)
+        st.image("TVperson.jpg", width=100)
+        st.markdown("티비를 <br/> 바라본다", unsafe_allow_html=True)
         if st.button("TV 선택"):
             st.write("TV가 선택되었습니다.")
 
     with col2:
-        st.image("ACperson.jpg", caption="에어컨을 바라본다", width=100)
+        st.image("ACperson.jpg", width=100)
+        st.markdown("에어컨을 <br/> 바라본다", unsafe_allow_html=True)
         if st.button("에어컨 선택"):
             st.write("에어컨이 선택되었습니다.")
 
     with col3:
-        st.image("HMperson.jpg", caption="가습기를 바라본다", width=100)
+        st.image("HMperson.jpg", width=100)
+        st.markdown("가습기를 <br/> 바라본다", unsafe_allow_html=True)
         if st.button("가습기 선택"):
             st.write("가습기가 선택되었습니다.")
-    
+
     st.header("PDF에게 질문해보세요!")
     col_tv, col_ac, col_hm = st.columns(3)
 
