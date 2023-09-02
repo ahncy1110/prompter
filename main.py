@@ -50,7 +50,7 @@ def document_to_db(uploaded_file, size):    # 문서 크기에 맞게 사이즈 
     db = Chroma.from_documents(texts, embeddings_model)
     return db
 
-def wrap_text(text, line_length=18): # 챗봇 글자수 조절..
+def wrap_text(text, line_length=16): # 챗봇 글자수 조절..
     lines = []
     for i in range(0, len(text), line_length):
         lines.append(text[i:i + line_length])
