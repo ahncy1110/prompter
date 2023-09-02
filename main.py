@@ -83,7 +83,7 @@ if tv_file is not None:
             st.write("가습기가 선택되었습니다.")
 
     st.subheader("PDF에게 질문해보세요!")
-    col_tv, col_ac, col_hm = st.columns(3)
+    col_ac, col_tv, col_hm = st.columns(3)
 
     # Air Conditioner
     with col_ac:
