@@ -21,7 +21,7 @@ ac_file = PyPDFLoader("lg_ac_manual.pdf")
 hm_file = PyPDFLoader("winix_humidifier_manual.pdf")
 
 #제목
-st.title("ChatPDF")
+st.title("SSSC SightnSpeak")
 st.write("---")
 
 # 방 이미지
