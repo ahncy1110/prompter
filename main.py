@@ -65,16 +65,16 @@ if tv_file is not None:
     st.subheader("기기를 바라보고 선택하세요!")
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.image("person_TV.jpg", width=100)
-        st.markdown("티비를 <br/> 바라본다", unsafe_allow_html=True)
-        if st.button("TV 선택"):
-            st.write("TV가 선택되었습니다.")
-
-    with col2:
         st.image("person_AC.jpg", width=100)
         st.markdown("에어컨을 <br/> 바라본다", unsafe_allow_html=True)
         if st.button("에어컨 선택"):
             st.write("에어컨이 선택되었습니다.")
+
+    with col2:
+        st.image("person_TV.jpg", width=100)
+        st.markdown("TV를 <br/> 바라본다", unsafe_allow_html=True)
+        if st.button("TV 선택"):
+            st.write("TV가 선택되었습니다.")
 
     with col3:
         st.image("person_HM.jpg", width=100)
@@ -84,26 +84,6 @@ if tv_file is not None:
 
     st.subheader("PDF에게 질문해보세요!")
     col_tv, col_ac, col_hm = st.columns(3)
-
-    # TV
-    with col_tv:
-        st.subheader("TV")
-        tv_img = Image.open('television.png')
-        tv_img = tv_img.resize((100, 100))
-        st.image(tv_img)
-        tv_question = st.text_input('TV에게 질문을 입력하세요')
-        if st.button('TV에게 질문하기', key='tv_button'):
-            with st.spinner('Wait for it...'):
-                llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
-                qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_tv.as_retriever())
-                result = qa_chain({"query": tv_question})
-                st.session_state.chat_history['TV'].append({"question": tv_question, "answer": result["result"]})
-
-        # 챗 기록 출력
-        for chat in st.session_state.chat_history['TV']:
-            st.text(f"Q: {chat['question']}")
-            st.text(f"A: {chat['answer']}")
-            st.write("---")
 
     # Air Conditioner
     with col_ac:
@@ -121,6 +101,26 @@ if tv_file is not None:
 
         # 챗 기록 출력
         for chat in st.session_state.chat_history['AC']:
+            st.text(f"Q: {chat['question']}")
+            st.text(f"A: {chat['answer']}")
+            st.write("---")
+
+    # TV
+    with col_tv:
+        st.subheader("TV")
+        tv_img = Image.open('television.png')
+        tv_img = tv_img.resize((100, 100))
+        st.image(tv_img)
+        tv_question = st.text_input('TV에게 질문을 입력하세요')
+        if st.button('TV에게 질문하기', key='tv_button'):
+            with st.spinner('Wait for it...'):
+                llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+                qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_tv.as_retriever())
+                result = qa_chain({"query": tv_question})
+                st.session_state.chat_history['TV'].append({"question": tv_question, "answer": result["result"]})
+
+        # 챗 기록 출력
+        for chat in st.session_state.chat_history['TV']:
             st.text(f"Q: {chat['question']}")
             st.text(f"A: {chat['answer']}")
             st.write("---")
