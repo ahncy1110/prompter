@@ -50,7 +50,7 @@ def document_to_db(uploaded_file, size):    # 문서 크기에 맞게 사이즈 
     db = Chroma.from_documents(texts, embeddings_model)
     return db
 
-def wrap_text(text, line_length=16): # 챗봇 글자수 조절..
+def wrap_text(text, line_length=18): # 챗봇 글자수 조절..
     lines = []
     for i in range(0, len(text), line_length):
         lines.append(text[i:i + line_length])
@@ -107,8 +107,8 @@ if tv_file is not None:
 
         # 챗 기록 출력
         for chat in st.session_state.chat_history['AC']:
-            st.text(f"🤔: {wrap_text(chat['question'])}")
-            st.text(f"😊: {wrap_text(chat['answer'])}")
+            st.text(f"🤔 {wrap_text(chat['question'])}")
+            st.text(f"😊 {wrap_text(chat['answer'])}")
             st.write("---")
 
     # TV
@@ -127,8 +127,8 @@ if tv_file is not None:
 
         # 챗 기록 출력
         for chat in st.session_state.chat_history['TV']:
-            st.text(f"🤔: {wrap_text(chat['question'])}")
-            st.text(f"😊: {wrap_text(chat['answer'])}")
+            st.text(f"🤔 {wrap_text(chat['question'])}")
+            st.text(f"😊 {wrap_text(chat['answer'])}")
             st.write("---")
 
     # Humidifier
@@ -147,6 +147,6 @@ if tv_file is not None:
 
         # 챗 기록 출력
         for chat in st.session_state.chat_history['HM']:
-            st.text(f"🤔: {wrap_text(chat['question'])}")
-            st.text(f"😊: {wrap_text(chat['answer'])}")
+            st.text(f"🤔 {wrap_text(chat['question'])}")
+            st.text(f"😊 {wrap_text(chat['answer'])}")
             st.write("---")
