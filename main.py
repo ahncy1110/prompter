@@ -56,7 +56,7 @@ if tv_file is not None:
 
     # Choice
     st.header("기기를 선택하고 PDF에게 질문해보세요!!")
-    empty1, col_tv, empty2, col_ac, empty3, col_hm, empty4 = st.columns([1, 1, 1, 1, 1, 1, 1])
+    col_tv, col_ac, col_hm = st.columns(3)
 
     # TV
     with col_tv:
@@ -65,7 +65,7 @@ if tv_file is not None:
         tv_img = tv_img.resize((100, 100))
         st.image(tv_img)
         tv_question = st.text_input('TV에게 질문을 입력하세요')
-        if st.button('TV에게 질문하기'):
+        if st.button('TV에게 질문하기', key='tv_button'):
             with st.spinner('Wait for it...'):
                 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
                 qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_tv.as_retriever())
@@ -79,7 +79,7 @@ if tv_file is not None:
         ac_img = ac_img.resize((100, 100))
         st.image(ac_img)
         ac_question = st.text_input('에어컨에게 질문을 입력하세요')
-        if st.button('에어컨에게 질문하기'):
+        if st.button('에어컨에게 질문하기', key='ac_button'):
             with st.spinner('Wait for it...'):
                 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
                 qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_ac.as_retriever())
@@ -93,7 +93,7 @@ if tv_file is not None:
         hm_img = hm_img.resize((100, 100))
         st.image(hm_img)
         hm_question = st.text_input('가습기에게 질문을 입력하세요')
-        if st.button('가습기에게 질문하기'):
+        if st.button('가습기에게 질문하기', key='hm_button'):
             with st.spinner('Wait for it...'):
                 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
                 qa_chain = RetrievalQA.from_chain_type(llm, retriever=db_hm.as_retriever())
