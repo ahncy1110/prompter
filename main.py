@@ -25,8 +25,10 @@ st.title("ChatPDF")
 st.write("---")
 
 # 방 이미지
-cyworld_img = Image.open('cyworld-room.jpg', width=500)
-st.image(cyworld_img)
+cyworld_img = Image.open('cyworld-room.jpg')
+# 이미지 크기 조정
+cyworld_img = cyworld_img.resize((500, int(500 * (cyworld_img.height / cyworld_img.width))))
+st.image(cyworld_img, width=500)
 st.write("---")
 
 def document_to_db(uploaded_file, size):    # 문서 크기에 맞게 사이즈 지정하면 좋을 것 같아서 para 넣었어용
