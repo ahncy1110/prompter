@@ -25,10 +25,10 @@ st.title("ChatPDF")
 st.write("---")
 
 # 방 이미지
-cyworld_img = Image.open('cyworld-room.jpg')
+cyworld_img = Image.open('livingroom.jpeg')
 # 이미지 크기 조정
-cyworld_img = cyworld_img.resize((800, int(800 * (cyworld_img.height / cyworld_img.width))))
-st.image(cyworld_img, width=800)
+cyworld_img = cyworld_img.resize((650, int(650 * (cyworld_img.height / cyworld_img.width))))
+st.image(cyworld_img, width=650)
 st.write("---")
 
 def document_to_db(uploaded_file, size):    # 문서 크기에 맞게 사이즈 지정하면 좋을 것 같아서 para 넣었어용
@@ -64,19 +64,19 @@ if tv_file is not None:
     # Choice
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.image("TVperson.jpg", width=100)
+        st.image("person_TV.jpg", width=100)
         st.markdown("티비를 <br/> 바라본다", unsafe_allow_html=True)
         if st.button("TV 선택"):
             st.write("TV가 선택되었습니다.")
 
     with col2:
-        st.image("ACperson.jpg", width=100)
+        st.image("person_AC.jpg", width=100)
         st.markdown("에어컨을 <br/> 바라본다", unsafe_allow_html=True)
         if st.button("에어컨 선택"):
             st.write("에어컨이 선택되었습니다.")
 
     with col3:
-        st.image("HMperson.jpg", width=100)
+        st.image("person_HM.jpg", width=100)
         st.markdown("가습기를 <br/> 바라본다", unsafe_allow_html=True)
         if st.button("가습기 선택"):
             st.write("가습기가 선택되었습니다.")
