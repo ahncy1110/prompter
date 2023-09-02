@@ -21,7 +21,7 @@ ac_file = PyPDFLoader("lg_ac_manual.pdf")
 hm_file = PyPDFLoader("winix_humidifier_manual.pdf")
 
 #제목
-st.title("ChatPDF")
+st.title("SightnSpeak")
 st.write("---")
 
 # 방 이미지
@@ -63,6 +63,7 @@ if tv_file is not None:
 
     # Choice
     col1, col2, col3 = st.columns(3)
+    st.subheader("기기를 바라보고 선택하세요!")
     with col1:
         st.image("person_TV.jpg", width=100)
         st.markdown("티비를 <br/> 바라본다", unsafe_allow_html=True)
@@ -81,7 +82,7 @@ if tv_file is not None:
         if st.button("가습기 선택"):
             st.write("가습기가 선택되었습니다.")
 
-    st.header("PDF에게 질문해보세요!")
+    st.subheader("PDF에게 질문해보세요!")
     col_tv, col_ac, col_hm = st.columns(3)
 
     # TV
