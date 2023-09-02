@@ -61,9 +61,9 @@ if tv_file is not None:
 
     # Choice
     st.header("기기를 선택하세요!")
-    if st.button('에어컨'):
-        tv_img = Image.open("ACperson.png")
-        st.image(tv_img, caption="에어컨을 바라보며 선택")
+    st.image("ACperson.png", caption="에어컨을 바라본다", width=200)
+    if st.button("에어컨 선택"):
+        st.write("에어컨이 선택되었습니다.")
     #elif st.button('에어컨'):
     #    ac_img = Image.open("에어컨바라보는사람.png")
     #    st.image(ac_img, caption="에어컨을 바라보는 사람")
