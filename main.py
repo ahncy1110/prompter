@@ -21,7 +21,7 @@ ac_file = PyPDFLoader("lg_ac_manual.pdf")
 hm_file = PyPDFLoader("winix_humidifier_manual.pdf")
 
 #제목
-st.title("SSSC SightnSpeak")
+st.title("ChatPDF")
 st.write("---")
 
 # 방 이미지
@@ -60,7 +60,18 @@ if tv_file is not None:
     db_hm = document_to_db(hm_file, 300)
 
     # Choice
-    st.header("기기를 선택하고 PDF에게 질문해보세요!!")
+    st.header("기기를 선택하세요 PDF에게 질문해보세요!!")
+    if st.button('에어컨'):
+        tv_img = Image.open("ACperson.png")
+        st.image(tv_img, caption="에어컨을 바라보며 선택")
+    #elif st.button('에어컨'):
+    #    ac_img = Image.open("에어컨바라보는사람.png")
+    #    st.image(ac_img, caption="에어컨을 바라보는 사람")
+    #elif st.button('가습기'):
+    #    hm_img = Image.open("가습기바라보는사람.jpg")
+    #    st.image(hm_img, caption="가습기를 바라보는 사람")
+
+    st.header("PDF에게 질문해보세요!!")
     col_tv, col_ac, col_hm = st.columns(3)
 
     # TV
